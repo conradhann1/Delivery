@@ -168,6 +168,79 @@
         </div>
     </section>
 
+<body class="bg-gray-100 p-6">
+    <div class="max-w-2xl mx-auto space-y-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h1 class="text-2xl font-semibold text-blue-600 mb-4 text-center">Delivery Pricing Model</h1>
+            <p class="text-gray-700 mb-4">
+                Our delivery pricing is calculated based on the following factors:
+            </p>
+            <ul class="list-disc list-inside space-y-2 mb-4 text-gray-600">
+                <li><strong>Base Fare:</strong> $8 for deliveries within 5 km (includes the first stop).</li>
+                <li><strong>Distance Fee:</strong> $1 per additional kilometer beyond the initial 5 km.</li>
+                <li><strong>Additional Stop Fee:</strong> $4 per stop, applied only for stops beyond the first one.</li>
+                <li><strong>Heavy Item Fee:</strong> $5 for any item weighing above 15 lbs.</li>
+            </ul>
+            <p class="text-gray-500 italic">
+                Please note: The pricing provided by this calculator is an estimate and may be subject to change upon confirmation.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-8">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">Delivery Price Calculator</h2>
+            <form id="deliveryForm" class="space-y-4">
+                <div>
+                    <label for="distance" class="block text-gray-700 text-sm font-bold mb-2">Distance from Pick-up to Drop-off (km):</label>
+                    <input type="number" id="distance" name="distance" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div>
+                    <label for="stops" class="block text-gray-700 text-sm font-bold mb-2">Number of Stops:</label>
+                    <input type="number" id="stops" name="stops" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div>
+                    <label for="heavyItem" class="block text-gray-700 text-sm font-bold mb-2">Heavy Item (above 15 lbs):</label>
+                    <select id="heavyItem" name="heavyItem" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                </div>
+                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Calculate Price</button>
+            </form>
+            <div id="result" class="mt-6 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700" style="display: none;">
+                <h3 class="font-bold">Price:</h3>
+                <p id="price"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('deliveryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let distance = parseFloat(document.getElementById('distance').value);
+            let stops = parseInt(document.getElementById('stops').value);
+            let heavyItem = document.getElementById('heavyItem').value;
+            let price = 0;
+
+            if (distance <= 5) {
+                price = 8;
+            } else {
+                price = 8 + (distance - 5) * 1;
+            }
+
+            if (stops > 1) {
+                price += (stops - 1) * 4;
+            }
+
+            if (heavyItem === 'yes') {
+                price += 5;
+            }
+
+            document.getElementById('price').textContent = '$' + price.toFixed(2);
+            document.getElementById('result').style.display = 'block';
+        });
+    </script>
+
     <section id="contact" class="py-16 bg-red-600 text-white">
         <div class="container mx-auto px-6 text-center">
             <h2 class="text-3xl font-bold mb-6">Get in Touch!</h2>
